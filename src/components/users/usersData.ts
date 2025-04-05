@@ -1,0 +1,147 @@
+
+export const allUsers = [
+  { 
+    id: 1, 
+    name: 'John Smith', 
+    email: 'john.smith@company.com',
+    role: 'Administrator',
+    department: 'IT',
+    status: 'active',
+    mfa: true,
+    lastActive: '15 minutes ago',
+    location: 'New York',
+    lastLogin: '2025-04-05 09:32:15'
+  },
+  { 
+    id: 2, 
+    name: 'Sarah Parker', 
+    email: 'sarah.parker@company.com',
+    role: 'Manager',
+    department: 'Finance',
+    status: 'active',
+    mfa: true,
+    lastActive: '3 hours ago',
+    location: 'Chicago',
+    lastLogin: '2025-04-05 06:47:22'
+  },
+  { 
+    id: 3, 
+    name: 'James Wilson', 
+    email: 'james.wilson@company.com',
+    role: 'Analyst',
+    department: 'Marketing',
+    status: 'inactive',
+    mfa: false,
+    lastActive: '47 days ago',
+    location: 'Remote',
+    lastLogin: '2025-02-17 14:05:33'
+  },
+  { 
+    id: 4, 
+    name: 'Maria Johnson', 
+    email: 'maria.johnson@company.com',
+    role: 'Developer',
+    department: 'Engineering',
+    status: 'active',
+    mfa: true,
+    lastActive: '2 minutes ago',
+    location: 'San Francisco',
+    lastLogin: '2025-04-05 10:57:08'
+  },
+  { 
+    id: 5, 
+    name: 'Robert Davis', 
+    email: 'robert.davis@company.com',
+    role: 'Support Specialist',
+    department: 'Customer Service',
+    status: 'locked',
+    mfa: false,
+    lastActive: '30+ days ago',
+    location: 'Austin',
+    lastLogin: '2025-03-01 09:12:45'
+  },
+  { 
+    id: 6, 
+    name: 'Emma Thompson', 
+    email: 'emma.thompson@company.com',
+    role: 'Designer',
+    department: 'UX/UI',
+    status: 'active',
+    mfa: true,
+    lastActive: '1 hour ago',
+    location: 'Seattle',
+    lastLogin: '2025-04-05 09:05:51'
+  },
+  { 
+    id: 7, 
+    name: 'Michael Brown', 
+    email: 'michael.brown@company.com',
+    role: 'Team Lead',
+    department: 'Engineering',
+    status: 'active',
+    mfa: true,
+    lastActive: '4 hours ago',
+    location: 'Boston',
+    lastLogin: '2025-04-05 06:22:17'
+  },
+  { 
+    id: 8, 
+    name: 'Jennifer Lopez', 
+    email: 'jennifer.lopez@company.com',
+    role: 'Project Manager',
+    department: 'Operations',
+    status: 'active',
+    mfa: true,
+    lastActive: '10 minutes ago',
+    location: 'Miami',
+    lastLogin: '2025-04-05 10:49:33'
+  },
+  { 
+    id: 9, 
+    name: 'David Miller', 
+    email: 'david.miller@company.com',
+    role: 'Sales Representative',
+    department: 'Sales',
+    status: 'inactive',
+    mfa: false,
+    lastActive: '15 days ago',
+    location: 'Denver',
+    lastLogin: '2025-03-21 15:30:22'
+  },
+  { 
+    id: 10, 
+    name: 'Patricia Clark', 
+    email: 'patricia.clark@company.com',
+    role: 'HR Specialist',
+    department: 'Human Resources',
+    status: 'active',
+    mfa: true,
+    lastActive: '30 minutes ago',
+    location: 'Chicago',
+    lastLogin: '2025-04-05 10:29:41'
+  },
+  { 
+    id: 11, 
+    name: 'Thomas Wright', 
+    email: 'thomas.wright@company.com',
+    role: 'Quality Assurance',
+    department: 'Engineering',
+    status: 'active',
+    mfa: true,
+    lastActive: '1 day ago',
+    location: 'Portland',
+    lastLogin: '2025-04-04 11:15:07'
+  },
+  { 
+    id: 12, 
+    name: 'Linda Young', 
+    email: 'linda.young@company.com',
+    role: 'Financial Analyst',
+    department: 'Finance',
+    status: 'locked',
+    mfa: false,
+    lastActive: '45 days ago',
+    location: 'New York',
+    lastLogin: '2025-02-19 08:42:19'
+  }
+];
