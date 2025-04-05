@@ -21,6 +21,13 @@ const MFAStatus = () => {
     { name: 'Customer Service', total: 62, enabled: 42, percentage: 68 },
   ];
 
+  const getProgressColorClass = (percentage: number): string => {
+    if (percentage >= 90) return "bg-green-500";
+    if (percentage >= 75) return "bg-blue-500";
+    if (percentage >= 50) return "bg-yellow-500";
+    return "bg-red-500";
+  };
+
   return (
     <Card className="w-full">
       <CardHeader>
@@ -46,12 +53,12 @@ const MFAStatus = () => {
                 <Progress
                   value={dept.percentage}
                   className="h-2"
-                  indicatorColor={
-                    dept.percentage >= 90 ? "bg-green-500" :
-                    dept.percentage >= 75 ? "bg-blue-500" : 
-                    dept.percentage >= 50 ? "bg-yellow-500" : "bg-red-500"
-                  }
                 />
+                <style jsx>{`
+                  [role="progressbar"] > div {
+                    background-color: ${getProgressColorClass(dept.percentage)};
+                  }
+                `}</style>
                 <span className="text-xs w-10">
                   {dept.percentage}%
                 </span>
