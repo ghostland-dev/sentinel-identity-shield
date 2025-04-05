@@ -50,15 +50,12 @@ const MFAStatus = () => {
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <Progress
-                  value={dept.percentage}
-                  className="h-2"
-                />
-                <style jsx>{`
-                  [role="progressbar"] > div {
-                    background-color: ${getProgressColorClass(dept.percentage)};
-                  }
-                `}</style>
+                <div className="relative w-full h-2 bg-secondary rounded-full overflow-hidden">
+                  <div 
+                    className={`h-full ${getProgressColorClass(dept.percentage)}`} 
+                    style={{ width: `${dept.percentage}%` }}
+                  />
+                </div>
                 <span className="text-xs w-10">
                   {dept.percentage}%
                 </span>
