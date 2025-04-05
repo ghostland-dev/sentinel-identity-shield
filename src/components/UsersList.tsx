@@ -441,7 +441,8 @@ const UsersList = () => {
             <PaginationItem>
               <PaginationPrevious 
                 onClick={handlePreviousPage} 
-                disabled={currentPage === 1} 
+                aria-disabled={currentPage === 1}
+                className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
               />
             </PaginationItem>
             
@@ -481,7 +482,8 @@ const UsersList = () => {
             <PaginationItem>
               <PaginationNext 
                 onClick={handleNextPage}
-                disabled={currentPage === totalPages}
+                aria-disabled={currentPage === totalPages}
+                className={currentPage === totalPages ? "pointer-events-none opacity-50" : ""}
               />
             </PaginationItem>
           </PaginationContent>

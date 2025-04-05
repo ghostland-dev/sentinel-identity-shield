@@ -3,7 +3,7 @@ import React from 'react';
 import Header from '@/components/Header';
 import UsersList from '@/components/UsersList';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { PlusCircle, Users } from 'lucide-react';
+import { PlusCircle, Users as UsersIcon } from 'lucide-react';
 
 const Users = () => {
   return (
@@ -14,7 +14,7 @@ const Users = () => {
           <div className="flex items-center gap-3">
             <h1 className="text-3xl font-bold">User Management</h1>
             <div className="flex items-center gap-1 px-2 py-1 bg-primary/10 rounded text-sm">
-              <Users className="h-4 w-4 text-primary" />
+              <UsersIcon className="h-4 w-4 text-primary" />
               <span>12 total users</span>
             </div>
           </div>
