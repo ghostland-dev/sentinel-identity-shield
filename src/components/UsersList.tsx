@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import {
   Card,
@@ -35,7 +34,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Search, MoreHorizontal, Check, X, Clock, Shield, UserPlus, Filter } from 'lucide-react';
+import { Search, MoreHorizontal, Check, X, Clock, Filter } from 'lucide-react';
 import {
   Pagination,
   PaginationContent,
@@ -45,6 +44,8 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import UserDetailsDialog from './UserDetailsDialog';
+import { useToast } from "@/hooks/use-toast";
 
 // Extended user data with more fields
 const allUsers = [
@@ -194,13 +195,22 @@ const allUsers = [
   }
 ];
 
-const UsersList = () => {
+type UserData = typeof allUsers[0];
+type StatusFilter = 'all' | 'active' | 'inactive' | 'locked';
+
+interface UsersListProps {
+  statusFilter?: StatusFilter;
+}
+
+const UsersList = ({ statusFilter = 'all' }: UsersListProps) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState('all');
   const [departmentFilter, setDepartmentFilter] = useState('all');
   const [mfaFilter, setMfaFilter] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
   const [showFilters, setShowFilters] = useState(false);
+  const [selectedUser, setSelectedUser] = useState<UserData | null>(null);
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+  const { toast } = useToast();
   const usersPerPage = 5;
 
   // Get all unique departments for filter
@@ -255,9 +265,28 @@ const UsersList = () => {
 
   const handleClearFilters = () => {
     setSearchTerm('');
-    setStatusFilter('all');
     setDepartmentFilter('all');
     setMfaFilter('all');
+  };
+
+  const handleViewDetails = (user: UserData) => {
+    setSelectedUser(user);
+    setIsDetailsOpen(true);
+  };
+
+  const handleToggleMfa = (userId: number, currentStatus: boolean) => {
+    toast({
+      title: `MFA ${currentStatus ? 'Disabled' : 'Enabled'}`,
+      description: `Multi-factor authentication has been ${currentStatus ? 'disabled' : 'enabled'} for this user.`,
+    });
+  };
+
+  const handleToggleStatus = (userId: number, currentStatus: string) => {
+    const newStatus = currentStatus === 'active' ? 'inactive' : 'active';
+    toast({
+      title: `User ${newStatus === 'active' ? 'Activated' : 'Deactivated'}`,
+      description: `The user account has been ${newStatus}.`,
+    });
   };
 
   return (
@@ -268,10 +297,6 @@ const UsersList = () => {
             <CardTitle>User Accounts</CardTitle>
             <CardDescription>Manage user accounts and security settings</CardDescription>
           </div>
-          <Button className="gap-2">
-            <UserPlus className="h-4 w-4" />
-            Add User
-          </Button>
         </div>
         <div className="flex flex-col space-y-4">
           <div className="flex items-center gap-2">
@@ -297,21 +322,6 @@ const UsersList = () => {
 
           {showFilters && (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Status</label>
-                <Select value={statusFilter} onValueChange={setStatusFilter}>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Filter by status" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Statuses</SelectItem>
-                    <SelectItem value="active">Active</SelectItem>
-                    <SelectItem value="inactive">Inactive</SelectItem>
-                    <SelectItem value="locked">Locked</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
               <div className="space-y-2">
                 <label className="text-sm font-medium">Department</label>
                 <Select value={departmentFilter} onValueChange={setDepartmentFilter}>
@@ -401,17 +411,18 @@ const UsersList = () => {
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                          <DropdownMenuItem>Edit User</DropdownMenuItem>
-                          <DropdownMenuItem>View Details</DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => handleViewDetails(user)}>View Details</DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => handleViewDetails(user)}>Edit User</DropdownMenuItem>
                           <DropdownMenuItem>Reset Password</DropdownMenuItem>
                           <DropdownMenuSeparator />
-                          {user.mfa ? (
-                            <DropdownMenuItem>Disable MFA</DropdownMenuItem>
-                          ) : (
-                            <DropdownMenuItem>Enable MFA</DropdownMenuItem>
-                          )}
+                          <DropdownMenuItem onClick={() => handleToggleMfa(user.id, user.mfa)}>
+                            {user.mfa ? 'Disable MFA' : 'Enable MFA'}
+                          </DropdownMenuItem>
                           <DropdownMenuSeparator />
-                          <DropdownMenuItem className="text-red-500">
+                          <DropdownMenuItem 
+                            className={user.status === 'active' ? "text-red-500" : "text-green-500"}
+                            onClick={() => handleToggleStatus(user.id, user.status)}
+                          >
                             {user.status === 'active' ? 'Deactivate' : 'Activate'}
                           </DropdownMenuItem>
                         </DropdownMenuContent>
@@ -449,7 +460,6 @@ const UsersList = () => {
             {Array.from({ length: totalPages }).map((_, index) => {
               const pageNumber = index + 1;
               
-              // Display first page, current page, last page, and pages around current
               if (
                 pageNumber === 1 ||
                 pageNumber === totalPages ||
@@ -467,7 +477,6 @@ const UsersList = () => {
                 );
               }
               
-              // Show ellipsis if there's a gap
               if (pageNumber === currentPage - 2 || pageNumber === currentPage + 2) {
                 return (
                   <PaginationItem key={`ellipsis-${pageNumber}`}>
@@ -489,6 +498,14 @@ const UsersList = () => {
           </PaginationContent>
         </Pagination>
       </CardFooter>
+
+      {selectedUser && (
+        <UserDetailsDialog
+          user={selectedUser}
+          open={isDetailsOpen}
+          onOpenChange={setIsDetailsOpen}
+        />
+      )}
     </Card>
   );
 };
